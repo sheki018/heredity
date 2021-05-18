@@ -95,12 +95,7 @@ def main():
 
 
 def load_data(filename):
-    """
-    Load gene and trait data from a file into a dictionary.
-    File assumed to be a CSV containing fields name, mother, father, trait.
-    mother, father must both be blank, or both be valid names in the CSV.
-    trait should be 0 or 1 if trait is known, blank otherwise.
-    """
+    #Load gene and trait data from a file into a dictionary.
     data = dict()
     with open(filename) as f:
         reader = csv.DictReader(f)
@@ -117,9 +112,6 @@ def load_data(filename):
 
 
 def powerset(s):
-    """
-    Return a list of all possible subsets of set s.
-    """
     s = list(s)
     return [
         set(s) for s in itertools.chain.from_iterable(
@@ -129,16 +121,8 @@ def powerset(s):
 
 
 def joint_probability(people, one_gene, two_genes, have_trait):
-    """
-    Compute and return a joint probability.
-
-    The probability returned should be the probability that
-        * everyone in set `one_gene` has one copy of the gene, and
-        * everyone in set `two_genes` has two copies of the gene, and
-        * everyone not in `one_gene` or `two_gene` does not have the gene, and
-        * everyone in set `have_trait` has the trait, and
-        * everyone not in set` have_trait` does not have the trait.
-    """
+    #Compute and return a joint probability.
+    
     probability = float(1)
 
     for person in people:
@@ -192,12 +176,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
 
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
-    """
-    Add to `probabilities` a new joint probability `p`.
-    Each person should have their "gene" and "trait" distributions updated.
-    Which value for each distribution is updated depends on whether
-    the person is in `have_gene` and `have_trait`, respectively.
-    """
+
     for person in probabilities:
         if person in one_gene:
             probabilities[person]["gene"][1] += p
@@ -210,10 +189,7 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
 
 
 def normalize(probabilities):
-    """
-    Update `probabilities` such that each probability distribution
-    is normalized (i.e., sums to 1, with relative proportions the same).
-    """
+
     for person in probabilities:
         for field in probabilities[person]:
             total = sum(dict(probabilities[person][field]).values())
